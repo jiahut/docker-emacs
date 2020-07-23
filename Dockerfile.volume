@@ -1,0 +1,13 @@
+FROM alpine  as builder 
+
+COPY emacs.d.tar.gz  /
+
+RUN mkdir -p /data/.emacs.d && tar  xzvf /emacs.d.tar.gz -C  /data/
+
+FROM alpine
+
+COPY --from=builder /data/.emacs.d/  /data/.emacs.d/
+
+COPY spacemacs  /data/.spacemacs
+
+COPY fonts/  /data/.local/share/fonts/
