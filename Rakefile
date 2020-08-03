@@ -18,10 +18,20 @@ task :instance  do
   ).join(' ')
 end
 
+task :default do
+  sh "rake --tasks"
+end
+
 
 desc "build emacs image "
 task :build_emacs do
   sh "docker build . --network host -f Dockerfile -t jiahut/docker-emacs"
+end
+
+
+desc "build emacs image from git"
+task :build_emacs_git do
+  sh "docker build . --network host -f Dockerfile.git -t jiahut/docker-emacs:git"
 end
 
 desc "build emacs.d-volume image "
@@ -50,6 +60,6 @@ task :stop do
 end
 
 desc "remove emacs instance "
-task :stop do
+task :remove do
   sh "docker rm emacs"
 end
