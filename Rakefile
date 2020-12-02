@@ -14,7 +14,7 @@ task :instance  do
     -e DISPLAY=unix$DISPLAY
     -v /dev/shm:/dev/shm
     --name emacs
-    jiahut/docker-emacs
+    jiahut/docker-emacs:2
   ).join(' ')
 end
 
@@ -26,6 +26,11 @@ end
 desc "build emacs image "
 task :build_emacs do
   sh "docker build . --network host -f Dockerfile -t jiahut/docker-emacs"
+end
+
+desc "fix the privilege "
+task :fix_data_privilege do
+  sh "docker exec -uroot -it emacs bash -c 'chown -R 1000:1000 /data/'"
 end
 
 
